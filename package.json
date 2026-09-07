@@ -1,0 +1,32 @@
+{
+    "name": "comandago",
+    "version": "1.0.0",
+    "description": "Sistema de comandas de pedidos",
+    "license": "MIT",
+    "author": "Ominixjs",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon server",
+        "lint": "eslint .",
+        "lint:watch": "eslint . --watch",
+        "lint:fix": "eslint . --fix",
+        "lint:src": "eslint src",
+        "lint:src:fix": "eslint src --fix"
+    },
+    "dependencies": {
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "mysql2": "^3.24.3",
+        "nanoid": "^6.0.1",
+        "sequelize": "^6.37.8",
+        "winston": "^3.19.0",
+        "zod": "^4.5.4"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.10.0",
+        "globals": "^17.12.0",
+        "nodemon": "^3.1.14"
+    }
+}
