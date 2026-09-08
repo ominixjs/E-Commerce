@@ -10,21 +10,22 @@ API para uma loja de vendas de produtos online
 ## 🔠 Requisitos
 
 - Autenticação
-    - [] Cadastro de clientes;
+    - [X] Cadastro de clientes;
     - [] Login de clientes;
     - [] Visualizar dados do cliente;
     - [] Editar dados do cliente;
     - [] Exclusão permanente do cliente;
+    - [] Validaçã de dois fatores;
 
 ## 💼 Regras de negócio
 
 - Autenticação
-    - [] Controle de tentativas de cadastro;
-    - [] Controle de tentativas de login;
-    - [] Não cadastrar cliente cadastrado;
-    - [] Validar cadastro antes de cadastrar cliente;
+    - [X] Não cadastrar cliente cadastrado;
+    - [X] Validar cadastro antes de cadastrar cliente;
     - [] Validar cadastro do cliente para edição;
     - [] Validar cadastro do cliente antes de exclusão;
+    - [] Controle de tentativas de cadastro;
+    - [] Controle de tentativas de login;
 
 ## 🌉 Endpoints
 

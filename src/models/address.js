@@ -1,37 +1,40 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database.js";
 
-const User = sequelize.define(
-    "Users",
+const Address = sequelize.define(
+    "Address",
     {
         id: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
         },
-        name: {
+        zip: {
+            type: DataTypes.STRING(8),
+            allowNull: false,
+        },
+        street: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        birthday: {
+        number: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        password: {
+        complement: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        termsAccepted: {
-            type: DataTypes.JSON,
-            defaultValue: [],
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        state: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
     },
     { freezeTableName: true }
 );
 
-export default User;
+export default Address;
