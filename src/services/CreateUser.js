@@ -1,13 +1,13 @@
-import { nanoid } from "nanoid";
-import bcrypt from "bcrypt";
+import { nanoid } from 'nanoid';
+import bcrypt from 'bcrypt';
 
 //=== Configs
-import logger from "../configs/logger.js";
+import logger from '../configs/logger.js';
 //=== Repositories
-import { UserModel, AddressModel } from "../models/index.js";
+import { UserModel, AddressModel } from '../models/index.js';
 //=== Utils
-import AppError from "../utils/AppError.js";
-import registerSchame from "../utils/resgisterSchame.js";
+import AppError from '../utils/AppError.js';
+import registerSchame from '../utils/resgisterSchame.js';
 
 export default async function CreateUser(data) {
     // Validação do formulário de cadastro
@@ -18,8 +18,8 @@ export default async function CreateUser(data) {
     }
 
     // Confere se usuário esta cadastro
-    const user = await UserModel.findOne({ email: data.email });
-    if (user) throw new AppError("Usuário já esta cadastrado", 409);
+    const user = await UserModel.findOne({ where: { email: data.email } });
+    if (user) throw new AppError('Usuário já esta cadastrado', 409);
 
     // Gera um ID personalizado
     const id = nanoid(10);
@@ -37,8 +37,8 @@ export default async function CreateUser(data) {
         // Os termos serão adicionados em uma array
         termsAccepted: [
             {
-                version: "v1.0",
-                type: "Termos de uso e privacidade",
+                version: 'v1.0',
+                type: 'Termos de uso e privacidade',
                 accepted: data.termsUseAndPrivacy,
                 date: new Date().toISOString(),
             },
@@ -60,5 +60,5 @@ export default async function CreateUser(data) {
     await UserModel.create({ ...userData });
     await AddressModel.create({ ...userAddress });
 
-    logger.info({ id, name: data.name, message: "Conta criada com sucesso" });
+    logger.info({ id, email: data.email, message: 'Conta criada com sucesso' });
 }

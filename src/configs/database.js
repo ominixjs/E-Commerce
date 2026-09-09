@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
 
 const SCHAME = process.env.DB_SCHAME;
 const USER = process.env.DB_USER;
@@ -7,7 +7,7 @@ const HOST = process.env.DB_HOST;
 
 const sequelize = new Sequelize(SCHAME, USER, PASSWORD, {
   host: HOST,
-  dialect: "mysql",
+  dialect: 'mysql',
 });
 
 export default sequelize;

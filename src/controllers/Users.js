@@ -1,27 +1,39 @@
 //=== Services
-import FindDBUser from "../services/FindUserDB.js";
-import CreateUser from "../services/CreateUser.js";
-import ListUsers from "../services/ListUsers.js";
+import FindDBUser from '../services/LoginUser.js';
+import LoginUser from '../services/LoginUser.js';
+import CreateUser from '../services/CreateUser.js';
+import ListUsers from '../services/ListUsers.js';
 
 export async function Users(req, res) {
     const users = await ListUsers();
     return res.status(200).json(users);
 }
 
-export async function View(req, res) {
-    const user = await FindDBUser(req.body.id);
-    return res.status(200).json({ user });
+export async function Login(req, res) {
+    // Sistema de login de usuário
+    const token = await LoginUser(req.body);
+
+    // Gerar um cookie
+    res.cookie('authToken', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    // Exibe o token
+    return res.status(200).json({ token });
 }
 
 export async function Create(req, res) {
     await CreateUser(req.body);
-    return res.status(200).json({ success: "Conta criada com sucesso" });
+    return res.status(200).json({ success: 'Conta criada com sucesso' });
 }
 
 export function Edit(req, res) {
-    return res.status(200).json({ success: "Hello World" });
+    return res.status(200).json({ success: 'Hello World' });
 }
 
 export function Delete(req, res) {
-    return res.status(200).json({ success: "Hello World" });
+    return res.status(200).json({ success: 'Hello World' });
 }
