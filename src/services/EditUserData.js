@@ -32,8 +32,16 @@ export default async function EditUserData(userId, data) {
     // Validar se email é temporario ou é fake
     // ...
 
+    // Alterando instancia para verificar e há alterações
+    user.set(data);
+
+    // Confere alterações, se não houve finaliza a função
+    if (!user.changed()) {
+        throw new AppError("Nenhuma alteração foi realizada", 200);
+    }
+
     // O sequelize valida e altera apenas os campos de mudaram em relação a instancia
-    user.update(data);
+    user.save(data);
 
     logger.info({
         id: userId,

@@ -4,8 +4,10 @@ import LoginUser from "../services/LoginUser.js";
 import CreateUser from "../services/CreateUser.js";
 import ListUsers from "../services/ListUsers.js";
 import EditUserData from "../services/EditUserData.js";
+import DeleteUser from "../services/DeleteUser.js";
 
 export async function Users(req, res) {
+    // Lista de usuários
     const users = await ListUsers();
     return res.status(200).json(users);
 }
@@ -27,8 +29,10 @@ export async function Login(req, res) {
 }
 
 export async function Create(req, res) {
+    // Valida e cria uma nova conta
     await CreateUser(req.body);
-    return res.status(200).json({ success: "Conta criada com sucesso" });
+
+    return res.status(200).json({ success: "Conta criada com sucesso." });
 }
 
 export async function Edit(req, res) {
@@ -38,9 +42,15 @@ export async function Edit(req, res) {
     // Carregar dados do usuário logado
     const user = await FindUserDB(req.params.id);
 
-    return res.status(200).json(user);
+    return res.status(201).json(user);
 }
 
-export function Delete(req, res) {
-    return res.status(200).json({ success: "Hello World" });
+export async function Delete(req, res) {
+    // Validação e deleção de dados
+    await DeleteUser(req.params.id, "Receber nome de token");
+
+    return res.status(200).json({
+        message:
+            "Você deletou sua conta, aguarde aos próximos instance para confirmação pelo email.",
+    });
 }

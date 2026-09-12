@@ -13,7 +13,7 @@ API para uma loja de vendas de produtos online
     - [x] Cadastro de clientes;
     - [x] Login de clientes;
     - [x] Editar dados do cliente;
-    - [] Exclusão permanente do cliente;
+    - [x] Exclusão permanente do cliente;
     - [] Validação de dois fatores;
 
 ## 💼 Regras de negócio
@@ -22,7 +22,7 @@ API para uma loja de vendas de produtos online
     - [x] Não cadastrar cliente cadastrado;
     - [x] Validar cadastro antes de cadastrar cliente;
     - [x] Validar cadastro do cliente para edição;
-    - [] Validar cadastro do cliente antes de exclusão;
+    - [x] Validar cadastro do cliente antes de exclusão;
     - [] Controle de tentativas de cadastro;
     - [] Controle de tentativas de login;
 
