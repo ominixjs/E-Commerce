@@ -1,12 +1,12 @@
-import express from 'express';
+import express from "express";
 
 //=== Routers
-import UserRouter from './src/routers/UserRouter.js';
+import UserRouter from "./src/routers/UserRouter.js";
 //=== Configs
-import sequelize from './src/configs/database.js';
-import logger from './src/configs/logger.js';
+import sequelize from "./src/configs/database.js";
+import logger from "./src/configs/logger.js";
 //=== Middlewares
-import ErrorHandler from './src/middlewares/ErrorHandler.js';
+import ErrorHandler from "./src/middlewares/ErrorHandler.js";
 
 //===
 const app = express();
@@ -18,12 +18,10 @@ app.use(express.json());
 //===
 try {
     await sequelize.authenticate();
-    logger.info('[BANCO DE DADOS] Conexão feita');
+    logger.info("[BANCO DE DADOS] Conexão feita");
 } catch (err) {
-    logger.error('[BANCO DE DADOS] Sem conexão');
+    logger.error("[BANCO DE DADOS] Sem conexão");
 }
-
-
 
 //=== Endpoints
 app.use(UserRouter);

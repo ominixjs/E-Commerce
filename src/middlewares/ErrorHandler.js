@@ -6,7 +6,7 @@ import logger from "../configs/logger.js";
 import AppError from "../utils/AppError.js";
 
 // trata erros da aplicação
-export default function ErrorHandler(error, req, res, next) {
+export default function ErrorHandler(error, req, res, _next) {
     // Instancias de erros manuais
     if (error instanceof AppError) {
         return res.status(error.statusCode).json({ status: "error", message: error.message });

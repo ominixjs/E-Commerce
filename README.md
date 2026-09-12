@@ -9,28 +9,28 @@ API para uma loja de vendas de produtos online
 
 ## 🔠 Requisitos
 
-- Autenticação
-    - [X] Cadastro de clientes;
-    - [] Login de clientes;
-    - [] Visualizar dados do cliente;
-    - [] Editar dados do cliente;
+- Autenticação / Usuário
+    - [x] Cadastro de clientes;
+    - [x] Login de clientes;
+    - [x] Editar dados do cliente;
     - [] Exclusão permanente do cliente;
-    - [] Validaçã de dois fatores;
+    - [] Validação de dois fatores;
 
 ## 💼 Regras de negócio
 
-- Autenticação
-    - [X] Não cadastrar cliente cadastrado;
-    - [X] Validar cadastro antes de cadastrar cliente;
-    - [] Validar cadastro do cliente para edição;
+- Autenticação / Usuário
+    - [x] Não cadastrar cliente cadastrado;
+    - [x] Validar cadastro antes de cadastrar cliente;
+    - [x] Validar cadastro do cliente para edição;
     - [] Validar cadastro do cliente antes de exclusão;
     - [] Controle de tentativas de cadastro;
     - [] Controle de tentativas de login;
 
 ## 🌉 Endpoints
 
-- Autenticação
-    - `get /users` buscar dados cadastrado
-    - `post /users` criar uma conta
-    - `put /users/:id` editar dados da conta
-    - `delete /users/:id` deletar conta
+- Autenticação / Usuário
+    - `get /users` Obter informações do usuário
+    - `post /login` Solicitar dados do cliente / login
+    - `post /register` Criar uma conta
+    - `put /users/:id` Editar dados da conta
+    - `delete /users/:id` Deletar conta

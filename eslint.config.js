@@ -3,9 +3,17 @@ import globals from "globals";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
+    /* ========================================
+     * IGNORE
+     * ======================================== */
+
     {
         ignores: ["node_modules/**", "dist/**", "build/**", "coverage/**", "logs/**", "*.min.js"],
     },
+
+    /* ========================================
+     * JAVASCRIPT
+     * ======================================== */
 
     {
         files: ["**/*.js"],
@@ -22,34 +30,11 @@ export default defineConfig([
         },
 
         linterOptions: {
-            reportUnusedInlineConfigs: "warn",
-            reportUnusedDisableDirectives: "warn",
+            reportUnusedInlineConfigs: "error",
+            reportUnusedDisableDirectives: "error",
         },
 
         rules: {
-            /* ========================================
-             * ERROS REAIS
-             * ======================================== */
-
-            "no-undef": "error",
-            "no-unreachable": "error",
-            "no-dupe-keys": "error",
-            "no-duplicate-case": "error",
-            "no-invalid-regexp": "error",
-            "no-irregular-whitespace": "error",
-            "no-unreachable-loop": "error",
-            "no-ex-assign": "error",
-            "no-func-assign": "error",
-            "no-import-assign": "error",
-            "no-loss-of-precision": "error",
-            "no-obj-calls": "error",
-            "no-regex-spaces": "error",
-            "no-sparse-arrays": "error",
-            "no-unexpected-multiline": "error",
-            "no-with": "error",
-            "use-isnan": "error",
-            "valid-typeof": "error",
-
             /* ========================================
              * VARIÁVEIS
              * ======================================== */
@@ -64,68 +49,93 @@ export default defineConfig([
                 },
             ],
 
-            "no-const-assign": "error",
-            "no-redeclare": "error",
             "no-shadow": "warn",
-            "prefer-const": "warn",
+
+            "prefer-const": "error",
 
             /* ========================================
              * BOAS PRÁTICAS
              * ======================================== */
 
             eqeqeq: ["error", "always"],
+
             curly: ["error", "all"],
+
             "no-var": "error",
+
             "no-new-wrappers": "error",
+
             "no-new-object": "error",
+
             "no-array-constructor": "error",
+
             "no-eval": "error",
+
             "no-implied-eval": "error",
+
             "no-new-func": "error",
+
+            "no-with": "error",
+
             "no-delete-var": "error",
-            "no-prototype-builtins": "warn",
-            "no-self-compare": "error",
-            "no-self-assign": "error",
-            "no-duplicate-imports": "warn",
 
             /* ========================================
-             * PROMISES / ASYNC
+             * PROMISE / ASYNC
              * ======================================== */
 
             "no-async-promise-executor": "error",
+
             "no-promise-executor-return": "error",
+
+            /* ========================================
+             * OBJETOS / ARRAYS
+             * ======================================== */
+
+            "no-prototype-builtins": "error",
+
+            "no-self-compare": "error",
+
+            "no-self-assign": "error",
+
+            "no-duplicate-imports": "error",
 
             /* ========================================
              * IMPORTS
              * ======================================== */
 
-            "sort-imports": [
-                "warn",
-                {
-                    ignoreDeclarationSort: true,
-                },
-            ],
+            // A organização dos imports pode ser feita
+            // utilizando comentários e agrupamentos.
+            "sort-imports": "off",
 
             /* ========================================
              * DEBUG
              * ======================================== */
 
             "no-debugger": "error",
+
             "no-alert": "error",
 
             /* ========================================
              * CONSOLE
              * ======================================== */
 
+            // Mantido como warning durante o desenvolvimento.
+            // Em produção, prefira utilizar o Winston.
             "no-console": "warn",
 
             /* ========================================
-             * RETORNOS
+             * COMENTÁRIOS
              * ======================================== */
 
-            "consistent-return": "warn",
-            "no-useless-return": "warn",
-            "no-else-return": "warn",
+            // Comentários podem ter ou não espaço após //.
+            "spaced-comment": "off",
+
+            /* ========================================
+             * VÍRGULAS
+             * ======================================== */
+
+            // O projeto utiliza vírgulas finais.
+            "comma-dangle": "off",
 
             /* ========================================
              * ESTILO
@@ -142,12 +152,8 @@ export default defineConfig([
                 },
             ],
 
-            /*
-             * Indentação é aviso porque o Prettier
-             * pode ser responsável por formatá-la.
-             */
             indent: [
-                "warn",
+                "error",
                 4,
                 {
                     SwitchCase: 1,
@@ -170,23 +176,15 @@ export default defineConfig([
                     },
 
                     ArrayExpression: "first",
+
                     ObjectExpression: "first",
                 },
             ],
 
-            "comma-dangle": [
-                "error",
-                {
-                    arrays: "always-multiline",
-                    objects: "always-multiline",
-                    imports: "always-multiline",
-                    exports: "always-multiline",
-                    functions: "never",
-                },
-            ],
-
             "object-curly-spacing": ["error", "always"],
+
             "array-bracket-spacing": ["error", "never"],
+
             "computed-property-spacing": ["error", "never"],
 
             "keyword-spacing": [
@@ -210,11 +208,6 @@ export default defineConfig([
 
             "space-in-parens": ["error", "never"],
 
-            /*
-             * Comentários não devem impedir o desenvolvimento.
-             */
-            "spaced-comment": "warn",
-
             /* ========================================
              * LINHAS
              * ======================================== */
@@ -236,25 +229,60 @@ export default defineConfig([
              * OPERADORES
              * ======================================== */
 
-            "operator-linebreak": ["warn", "before"],
+            "operator-linebreak": ["error", "before"],
+
             "no-mixed-operators": "warn",
+
+            /* ========================================
+             * RETURN
+             * ======================================== */
+
+            "consistent-return": "warn",
+
+            "no-useless-return": "error",
+
+            "no-else-return": "warn",
 
             /* ========================================
              * QUALIDADE
              * ======================================== */
 
-            "no-extra-bind": "warn",
-            "no-extra-boolean-cast": "warn",
+            "no-ex-assign": "error",
+
+            "no-extend-native": "error",
+
+            "no-extra-bind": "error",
+
+            "no-extra-boolean-cast": "error",
+
             "no-fallthrough": "error",
+
             "no-floating-decimal": "error",
+
+            "no-func-assign": "error",
+
+            "no-import-assign": "error",
+
+            "no-loss-of-precision": "error",
+
+            "no-obj-calls": "error",
+
             "no-octal": "error",
+
+            "no-regex-spaces": "error",
+
             "no-sparse-arrays": "error",
-            "no-unmodified-loop-condition": "warn",
+
+            "no-unmodified-loop-condition": "error",
+
+            "use-isnan": "error",
+
+            "valid-typeof": "error",
         },
     },
 
     /* ========================================
-     * CONFIGURAÇÕES
+     * ARQUIVOS DE CONFIGURAÇÃO
      * ======================================== */
 
     {

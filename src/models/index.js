@@ -1,5 +1,3 @@
-import sequelize from "../configs/database.js";
-
 //=== Models
 import UserModel from "./User.js";
 import AddressModel from "./Address.js";

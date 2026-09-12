@@ -34,7 +34,7 @@ const Address = sequelize.define(
             allowNull: false,
         },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
 );
 
 export default Address;
