@@ -1,9 +1,9 @@
 //=== Configs
-import logger from "../configs/logger.js";
+import logger from "../../configs/logger.js";
 //=== Repositories
-import { UserModel } from "../models/index.js";
+import { UserModel } from "../../models/index.js";
 //=== Utils
-import AppError from "../utils/AppError.js";
+import AppError from "../../utils/AppError.js";
 
 export default async function DeleteUser(userId, email) {
     // Valida cadastro do usuário

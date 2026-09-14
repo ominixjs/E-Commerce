@@ -2,12 +2,12 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // === Configs
-import logger from "../configs/logger.js";
+import logger from "../../configs/logger.js";
 // === Repositories
-import { UserModel } from "../models/index.js";
+import { UserModel } from "../../models/index.js";
 // === Utils
-import AppError from "../utils/AppError.js";
-import UserSchame from "../utils/UserSchame.js";
+import AppError from "../../utils/AppError.js";
+import UserSchame from "../../utils/UserSchame.js";
 
 export default async function LoginUser(data) {
     //  Esquema zod para validar dados do login

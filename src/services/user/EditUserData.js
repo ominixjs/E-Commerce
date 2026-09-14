@@ -1,10 +1,10 @@
 //=== Configs
-import logger from "../configs/logger.js";
+import logger from "../../configs/logger.js";
 //=== Repositories
-import { UserModel } from "../models/index.js";
+import { UserModel } from "../../models/index.js";
 //=== Utils
-import AppError from "../utils/AppError.js";
-import UserSchame from "../utils/UserSchame.js";
+import AppError from "../../utils/AppError.js";
+import UserSchame from "../../utils/UserSchame.js";
 
 export default async function EditUserData(userId, data) {
     // Esta definido campos que podem ser alterados e o front envia exatamente esses campos
@@ -41,7 +41,7 @@ export default async function EditUserData(userId, data) {
     }
 
     // O sequelize valida e altera apenas os campos de mudaram em relação a instancia
-    user.save(data);
+    await user.save(data);
 
     logger.info({
         id: userId,

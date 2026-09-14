@@ -1,12 +1,13 @@
 import express from "express";
 
-//=== Routers
-import UserRouter from "./src/routers/UserRouter.js";
 //=== Configs
 import sequelize from "./src/configs/database.js";
 import logger from "./src/configs/logger.js";
 //=== Middlewares
 import ErrorHandler from "./src/middlewares/ErrorHandler.js";
+//=== Routers
+import AuthRouter from "./src/routers/AuthRouter.js";
+import UserRouter from "./src/routers/UserRouter.js";
 
 //===
 const app = express();
@@ -24,7 +25,8 @@ try {
 }
 
 //=== Endpoints
-app.use(UserRouter);
+app.use(AuthRouter);
+app.use("/api/v1/", UserRouter);
 //=== Middleware para tratar erros dos controllers
 app.use(ErrorHandler);
 

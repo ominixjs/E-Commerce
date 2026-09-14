@@ -1,7 +1,7 @@
 //=== Repositories
-import { UserModel } from "../models/index.js";
+import { UserModel } from "../../models/index.js";
 //=== Utils
-import AppError from "../utils/AppError.js";
+import AppError from "../../utils/AppError.js";
 
 // Buscar dados do cliente para exibição
 export default async function FindDBUser(id) {
