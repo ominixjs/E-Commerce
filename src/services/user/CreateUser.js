@@ -64,8 +64,8 @@ export default async function CreateUser(data) {
         UserId: id,
     };
 
-    await UserModel.create({ ...userData });
-    await AddressModel.create({ ...userAddress });
+    await UserModel.create(userData);
+    await AddressModel.create(userAddress);
 
     logger.info({ id, email: data.email, message: "Conta criada com sucesso" });
 }

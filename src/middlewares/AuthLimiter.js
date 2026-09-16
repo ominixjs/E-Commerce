@@ -1,4 +1,5 @@
 import rateLimit from "express-rate-limit";
+
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 10,
@@ -10,11 +11,6 @@ const limiter = rateLimit({
             mensagem: "Muitas tentativas. Tente novamente mais tarde.",
             tentativasPermitidas: options.limit,
         });
-    },
-
-    // 2. Função para identificar o usuário (Ex: limitar por e-mail enviado no corpo da requisição)
-    keyGenerator: (req) => {
-        return req.body.email || req.ip;
     },
 
     // 3. Função para ignorar o limite sob certas condições

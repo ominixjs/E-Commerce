@@ -16,11 +16,12 @@ export default async function AuthMiddleware(req, res, next) {
     const parts = AuthHeader.split(" ");
     const [scheme, token] = parts;
 
+    if (scheme !== "Bearer" || !token) {
+        return res.status(401).json({ message: "Formato de autorização inválido" });
+    }
+
     // Valida token com a chave secreta
     const decoded = jwt.verify(token, process.env.JWT_KEY);
-    if (!decoded) {
-        throw new AppError("Token inválido ou expirado", 401);
-    }
 
     // Injeta dados do token no objeto da requisição
     req.user = { name: decoded.name, id: decoded.id };

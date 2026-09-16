@@ -31,7 +31,10 @@ const User = sequelize.define(
             defaultValue: [],
         },
     },
-    { freezeTableName: true },
+    {
+        freezeTableName: true,
+        timestamps: true,
+    },
 );
 
 export default User;

@@ -8,6 +8,7 @@ import ErrorHandler from "./src/middlewares/ErrorHandler.js";
 //=== Routers
 import AuthRouter from "./src/routers/AuthRouter.js";
 import UserRouter from "./src/routers/UserRouter.js";
+import ProductRouter from "./src/routers/ProductRouter.js";
 
 //===
 const app = express();
@@ -27,6 +28,8 @@ try {
 //=== Endpoints
 app.use(AuthRouter);
 app.use("/api/v1/", UserRouter);
+app.use("/api/v1/", ProductRouter);
+
 //=== Middleware para tratar erros dos controllers
 app.use(ErrorHandler);
 

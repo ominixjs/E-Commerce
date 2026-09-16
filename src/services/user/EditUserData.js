@@ -41,7 +41,7 @@ export default async function EditUserData(userId, data) {
     }
 
     // O sequelize valida e altera apenas os campos de mudaram em relação a instancia
-    await user.save(data);
+    await user.save();
 
     logger.info({
         id: userId,

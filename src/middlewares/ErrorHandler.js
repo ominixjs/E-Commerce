@@ -1,4 +1,5 @@
 import { ZodError } from "zod";
+import jwt from "jsonwebtoken";
 
 //=== Configs
 import logger from "../configs/logger.js";
@@ -12,11 +13,20 @@ export default function ErrorHandler(error, req, res, _next) {
         return res.status(error.statusCode).json({ status: "error", message: error.message });
     }
 
+    // Tratamento de erros de validação de formulários
     if (error instanceof ZodError) {
         return res.status(422).json({
             status: "erro_validacao",
             mensagem: "Dados enviados são inválidos.",
             erros: error.flatten().fieldErrors, // Formato limpo por campo
+        });
+    }
+
+    // Tratamento para erros na instancia do JWT
+    if (error instanceof jwt.TokenExpiredError || error instanceof jwt.JsonWebTokenError) {
+        return res.status(401).json({
+            status: "erro_token",
+            mensagem: "Token inválido ou expirado",
         });
     }
 

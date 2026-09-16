@@ -37,7 +37,7 @@ export default async function LoginUser(data) {
 
     //  Gerar um token
     const token = jwt.sign({ id: user.id, name: user.name }, process.env.JWT_KEY, {
-        expiresIn: "7d",
+        expiresIn: "15m",
     });
 
     //  Log de aviso
