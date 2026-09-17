@@ -28,7 +28,7 @@ export default async function EditProductStock(user, productId, data) {
     // Instancia também é reaproveitada
     const productInstance = await ProductModel.findByPk(productId);
     if (!productInstance) {
-        throw new AppError("Produto não esta cadastrado no sistema", 409);
+        throw new AppError("Produto não esta cadastrado no sistema", 404);
     }
 
     // Altera instancia na memoria e registra campos alterados
@@ -49,6 +49,6 @@ export default async function EditProductStock(user, productId, data) {
         id: user.id,
         name: user.name,
         productId,
-        message: `Alteração feita com sucesso. Campos alterados: ${changes}`,
+        message: `Alteração feita nos dados do produto. Campos alterados: ${changes}`,
     });
 }

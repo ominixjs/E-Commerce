@@ -51,7 +51,7 @@ de produtos e clientes e o processamento de pedidos.
 - [x] Paginação de produtos
 - [x] Criar estoque de produto
 - [x] Editar estoque de produto
-- [] Deletar estoque de produto
+- [x] Deletar estoque de produto
 - [] Categorias de produtos
 
 ## 📋 Regras de negócio
@@ -68,9 +68,9 @@ de produtos e clientes e o processamento de pedidos.
     - [] Validar autenticação para visualizar dados;
     - [] Validar autenticação para visualizar historico;
 - Produto
-    - [] Validar autenticação do cliente para lista produtos
-    - [] Validar autentucação do usuário antes de deletar
-    - [] Validar autentucação do usuário antes de deletar
+    - [x] Validar autenticação do cliente para lista produtos
+    - [x] Validar autentucação do usuário antes de editar
+    - [x] Validar autentucação do usuário antes de deletar
 
 ## 🔌 Endpoints
 

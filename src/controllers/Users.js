@@ -22,7 +22,7 @@ export async function Edit(req, res) {
 
 export async function Delete(req, res) {
     // Validação e deleção de dados
-    await DeleteUser(req.user.id, "Receber nome de token");
+    await DeleteUser(req.user);
 
     return res.status(200).json({
         message:

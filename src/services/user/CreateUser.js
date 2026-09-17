@@ -61,7 +61,7 @@ export default async function CreateUser(data) {
         complement: data.complement,
         city: data.city,
         state: data.state,
-        UserId: id,
+        userId: id,
     };
 
     await UserModel.create(userData);

@@ -45,7 +45,7 @@ export default async function EditUserData(userId, data) {
 
     logger.info({
         id: userId,
-        name: user.name,
+        email: user.email,
         message: `Alterou os dados`,
     });
 }

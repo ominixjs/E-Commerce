@@ -13,5 +13,7 @@ router.get("/products/:page", AuthMiddleware, productController.Products);
 router.post("/products", AuthMiddleware, productController.Create);
 // Editar informações do produto
 router.put("/products/:id", AuthMiddleware, productController.Edit);
+// Deletar estoque de produto
+router.delete("/products/:id", AuthMiddleware, productController.Delete);
 
 export default router;
