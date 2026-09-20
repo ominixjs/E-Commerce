@@ -8,13 +8,13 @@ import AppError from "../../utils/AppError.js";
 export default async function DeleteUser(user) {
     // Valida cadastro do usuário
     // Reutiliza instancia
-    const user = await UserModel.findByPk(user.id);
-    if (!user) {
+    const userInstance = await UserModel.findByPk(user.id);
+    if (!userInstance) {
         throw new AppError("Usuário não cadastrado no banco de dados", 404);
     }
 
     // Deleção do usuário
-    await user.destroy();
+    await userInstance.destroy();
 
     logger.info({ id: user.id, name: user.name, message: "Usuário deletou a conta" });
 }

@@ -3,7 +3,7 @@ import express from "express";
 //=== Controllers
 import * as userController from "../controllers/Users.js";
 //=== Middlewares
-import AuthMiddleware from "../middlewares/AuthMiddleware.js";
+import RequireAuth from "../middlewares/RequireAuth.js";
 
 //===
 const router = express.Router();
@@ -12,8 +12,8 @@ const router = express.Router();
 router.get("/users/list", userController.Users);
 
 // Editar dados do cliente
-router.put("/users/me", AuthMiddleware, userController.Edit);
+router.put("/users/me", RequireAuth, userController.Edit);
 // Deletar dados permanentemente do cliente
-router.delete("/users/me", AuthMiddleware, userController.Delete);
+router.delete("/users/me", RequireAuth, userController.Delete);
 
 export default router;

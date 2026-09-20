@@ -31,7 +31,9 @@ de produtos e clientes e o processamento de pedidos.
 - [x] Autenticação JWT
 - [x] Edição de dados
 - [x] Deleção de conta
-- [] Favoritar produtos
+- [x] Favoritar produtos
+- [x] Visualizar favoritos
+- [x] Remover favoritos
 - [] Pesquisar produtos
 - [] Consultar produtos
 - [] Gerenciamento de carrinho
@@ -65,12 +67,14 @@ de produtos e clientes e o processamento de pedidos.
 - Cliente
     - [x] Validar autenticação do cliente para edição;
     - [x] Validar autenticação do cliente antes de exclusão;
-    - [] Validar autenticação para visualizar dados;
-    - [] Validar autenticação para visualizar historico;
+    - [x] Validar autenticação para visualizar dados;
 - Produto
     - [x] Validar autenticação do cliente para lista produtos
     - [x] Validar autentucação do usuário antes de editar
     - [x] Validar autentucação do usuário antes de deletar
+    - [x] Validar se produto existe para favoritar
+    - [x] Validar se produto esta favoritado para remover status
+    - [x] Definir lista individual de favoritos para cada usuário
 
 ## 🔌 Endpoints
 
@@ -92,9 +96,12 @@ de produtos e clientes e o processamento de pedidos.
 
 ### Produtos
 
-| Metodo | Endpoit              | Descrição                  |
-| ------ | -------------------- | -------------------------- |
-| get    | /api/v1/products     | Lista de produtos          |
-| post   | /api/v1/products     | Criar estoque de produto   |
-| put    | /api/v1/products/:id | Editar dados do produto    |
-| delete | /api/v1/products/:id | Deletar estoque de produto |
+| Metodo | Endpoit                       | Descrição                  |
+| ------ | ----------------------------- | -------------------------- |
+| get    | /api/v1/products              | Lista de produtos          |
+| post   | /api/v1/products              | Criar estoque de produto   |
+| put    | /api/v1/products/:id          | Editar dados do produto    |
+| delete | /api/v1/products/:id          | Deletar estoque de produto |
+| get    | /api/v1/products/favorites/1  | Lista de favoritos         |
+| get    | /api/v1/products/:id/favorite | Favoritar produto          |
+| delete | /api/v1/products/:id/favorite | Deletar produto favoritado |
