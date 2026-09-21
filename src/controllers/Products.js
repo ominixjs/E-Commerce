@@ -5,12 +5,19 @@ import EditProductStock from "../services/product/EditProductStock.js";
 import DeleteProductStock from "../services/product/DeleteProductStock.js";
 import AddProductToFavorites from "../services/product/AddProductToFavorites.js";
 import RemoveProductfromFavorites from "../services/product/RemoveProductFromFavorites.js";
+import GetProductStockData from "../services/product/GetProductStockData.js";
 
 export async function Products(req, res) {
     // Lista com os produtos prontos para paginação e filtragem
-    const productList = await Pagination(req.user, req.params.page, "product");
+    const productList = await Pagination(req.user, req.query.page, "product");
 
     return res.status(200).json(productList);
+}
+
+export async function ProductInfo(req, res) {
+    const productInfo = await GetProductStockData(req.user, req.params.id);
+
+    return res.status(200).json({ message: productInfo });
 }
 
 export async function Create(req, res) {
@@ -36,9 +43,9 @@ export async function Delete(req, res) {
 
 export async function Favorites(req, res) {
     // Lista para paginação dos produtos favoritados
-    const favoriteList = await Pagination(req.user, req.params.page, "favorite");
+    const favoriteList = await Pagination(req.user, req.query.page, "favorite");
 
-    return res.status(200).json({ favoriteList });
+    return res.status(200).json(favoriteList);
 }
 
 export async function AddFavorite(req, res) {

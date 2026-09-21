@@ -10,7 +10,6 @@ const router = express.Router();
 
 // Visualizar cadastro no desenvolvimento
 router.get("/users/list", userController.Users);
-
 // Editar dados do cliente
 router.put("/users/me", RequireAuth, userController.Edit);
 // Deletar dados permanentemente do cliente

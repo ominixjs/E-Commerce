@@ -34,17 +34,17 @@ de produtos e clientes e o processamento de pedidos.
 - [x] Favoritar produtos
 - [x] Visualizar favoritos
 - [x] Remover favoritos
+- [x] Consultar produtos
 - [] Pesquisar produtos
-- [] Consultar produtos
 - [] Gerenciamento de carrinho
 - [] Criação de pedido
 - [] Consulta de pedido
 
 ### Administrador
 
-- [] Cadastro produto
-- [] Atualização de produtos
-- [] Controle de estoque
+- [x] Cadastro produto
+- [x] Atualização de produtos
+- [x] Controle de estoque
 - [] Gerenciamento de pedidos
 - [] Alteração de status de pedidos
 
@@ -99,9 +99,10 @@ de produtos e clientes e o processamento de pedidos.
 | Metodo | Endpoit                       | Descrição                  |
 | ------ | ----------------------------- | -------------------------- |
 | get    | /api/v1/products              | Lista de produtos          |
+| get    | /api/v1/products/favorites    | Lista de favoritos         |
+| get    | /api/v1/products/:id          | Consultar produto          |
 | post   | /api/v1/products              | Criar estoque de produto   |
 | put    | /api/v1/products/:id          | Editar dados do produto    |
 | delete | /api/v1/products/:id          | Deletar estoque de produto |
-| get    | /api/v1/products/favorites/1  | Lista de favoritos         |
-| get    | /api/v1/products/:id/favorite | Favoritar produto          |
+| post   | /api/v1/products/:id/favorite | Favoritar produto          |
 | delete | /api/v1/products/:id/favorite | Deletar produto favoritado |

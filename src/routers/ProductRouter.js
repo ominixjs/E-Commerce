@@ -7,18 +7,22 @@ import RequireAuth from "../middlewares/RequireAuth.js";
 
 const router = express.Router();
 
-// Rota principal dos produtos
-router.get("/products/:page", RequireAuth, productController.Products);
+// Lista de produtos
+router.get("/products", RequireAuth, productController.Products);
+// Lista de produtos favoritados
+router.get("/products/favorite", RequireAuth, productController.Favorites);
+// Consulta de produto
+router.get("/products/:id", RequireAuth, productController.ProductInfo);
+
 // Criação de estoque
 router.post("/products", RequireAuth, productController.Create);
 // Editar informações do produto
 router.put("/products/:id", RequireAuth, productController.Edit);
 // Deletar estoque de produto
 router.delete("/products/:id", RequireAuth, productController.Delete);
-// Lista de produtos favoritados
-router.get("/products/favorites/:page", RequireAuth, productController.Favorites);
+
 // Adicionar produto ao favoritos
-router.get("/products/:id/favorite", RequireAuth, productController.AddFavorite);
+router.post("/products/:id/favorite", RequireAuth, productController.AddFavorite);
 // Remover produtos dos favoritos
 router.delete("/products/:id/favorite", RequireAuth, productController.RemoveFavorite);
 

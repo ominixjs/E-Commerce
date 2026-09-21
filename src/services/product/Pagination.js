@@ -9,12 +9,14 @@ const models = {
 };
 
 export default async function Pagination(user, page, type) {
-    // Tratar possiveis tipos inválidos e converte valor para number
+    console.log({ user, page, type });
+
     page = parseInt(page);
-    if (isNaN(page)) {
+    if (isNaN(page) || page <= 0) {
         throw new AppError("Paginação não disponivel", 400);
     }
 
+    // Define o modelo
     const model = models[type];
 
     // Valores de paginação
