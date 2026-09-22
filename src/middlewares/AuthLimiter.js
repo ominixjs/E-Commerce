@@ -2,14 +2,13 @@ import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 10,
+    max: 1,
 
     // 1. Função customizada para quando o limite é excedido
     handler: (req, res, next, options) => {
         res.status(options.statusCode).json({
             status: "erro",
             mensagem: "Muitas tentativas. Tente novamente mais tarde.",
-            tentativasPermitidas: options.limit,
         });
     },
 
