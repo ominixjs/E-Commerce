@@ -9,7 +9,7 @@ import GetProductStockData from "../services/product/GetProductStockData.js";
 
 export async function Products(req, res) {
     // Lista com os produtos prontos para paginação e filtragem
-    const productList = await Pagination(req.user, req.query.page, "product");
+    const productList = await Pagination(req.user, req.query.page, req.query, "product");
 
     return res.status(200).json(productList);
 }
@@ -43,7 +43,7 @@ export async function Delete(req, res) {
 
 export async function Favorites(req, res) {
     // Lista para paginação dos produtos favoritados
-    const favoriteList = await Pagination(req.user, req.query.page, "favorite");
+    const favoriteList = await Pagination(req.user, req.query.page, req.query, "favorite");
 
     return res.status(200).json(favoriteList);
 }
