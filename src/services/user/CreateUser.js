@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 //=== Configs
 import logger from "../../configs/logger.js";
 //=== Repositories
-import { UserModel, AddressModel } from "../../models/index.js";
+import { UserModel, AddressModel, CartModel } from "../../models/index.js";
 //=== Utils
 import AppError from "../../utils/AppError.js";
 import UserSchame from "../../utils/UserSchame.js";
@@ -66,6 +66,7 @@ export default async function CreateUser(data) {
 
     await UserModel.create(userData);
     await AddressModel.create(userAddress);
+    await CartModel.create({ id: nanoid(10), userId: id }); // carrinho do cliente
 
     logger.info({ id, email: data.email, message: "Conta criada com sucesso" });
 }

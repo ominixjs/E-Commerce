@@ -27,7 +27,7 @@ export default async function LoginUser(data) {
     //  Procura pelo usuário no DB
     const user = await UserModel.findOne({ where: { email: data.email } });
     if (!user) {
-        throw new AppError("Usuário não cadastrado no banco de dados", 404);
+        throw new AppError("Usuário não esta cadastrado no banco de dados", 404);
     }
 
     const validPassword = await bcrypt.compare(data.password, user.password);

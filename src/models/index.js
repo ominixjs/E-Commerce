@@ -3,9 +3,11 @@ import UserModel from "./User.js";
 import AddressModel from "./Address.js";
 import ProductModel from "./Product.js";
 import FavoriteModel from "./Favorite.js";
-import sequelize from "../configs/database.js";
+import CartModel from "./Cart.js";
+import CartItemModel from "./CartItem.js";
 
 // Associações -->
+
 UserModel.hasMany(AddressModel, {
     foreignKey: "userId",
     onDelete: "CASCADE", // Deleta a associação quando o usuário for deletado
@@ -14,7 +16,7 @@ UserModel.hasMany(AddressModel, {
 AddressModel.belongsTo(UserModel, { foreignKey: "addressId" });
 
 // Cria uma associação para produtos definidos como favoritos.
-// Essa associação defina uma tabela intermediaria entre Usuário e Produto.
+// Essa associação define uma tabela intermediaria entre Usuário e Produto.
 UserModel.belongsToMany(ProductModel, {
     through: FavoriteModel, // Tabela intermediária
     foreignKey: "userId",
@@ -45,6 +47,19 @@ FavoriteModel.belongsTo(ProductModel, {
     foreignKey: "productId",
 });
 
-// await sequelize.sync({ force: true });
+// Associação entre usuário e carrinho com os produtos
+UserModel.hasOne(CartModel, { foreignKey: "userId", onDelete: "CASCADE" });
+CartModel.belongsTo(UserModel, { foreignKey: "cartId", onDelete: "CASCADE" });
 
-export { UserModel, AddressModel, ProductModel, FavoriteModel };
+// Associação entre carrinho e produtos do carrinho
+CartModel.hasMany(CartItemModel, { foreignKey: "cartId", onDelete: "CASCADE" });
+CartItemModel.belongsTo(CartModel, { foreignKey: "cartId", onDelete: "CASCADE" });
+
+// Associação de produtos e carinho de produtos
+ProductModel.hasMany(CartItemModel, { foreignKey: "productId", onDelete: "CASCADE" });
+CartItemModel.belongsTo(ProductModel, { foreignKey: "productId", onDelete: "CASCADE" });
+
+// await sequelize.sync({ force: true });
+// await sequelize.drop()
+
+export { UserModel, AddressModel, ProductModel, FavoriteModel, CartModel, CartItemModel };

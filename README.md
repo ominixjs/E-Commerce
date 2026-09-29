@@ -97,13 +97,28 @@ de produtos e clientes e o processamento de pedidos.
 
 ### Produtos
 
+| Metodo | Endpoit              | Descrição                  |
+| ------ | -------------------- | -------------------------- |
+| get    | /api/v1/products     | Lista de produtos          |
+| get    | /api/v1/products/:id | Consultar produto          |
+| post   | /api/v1/products     | Criar estoque de produto   |
+| put    | /api/v1/products/:id | Editar dados do produto    |
+| delete | /api/v1/products/:id | Deletar estoque de produto |
+
+### Favoritar
+
 | Metodo | Endpoit                       | Descrição                  |
 | ------ | ----------------------------- | -------------------------- |
-| get    | /api/v1/products              | Lista de produtos          |
-| get    | /api/v1/products/:id          | Consultar produto          |
-| post   | /api/v1/products              | Criar estoque de produto   |
-| put    | /api/v1/products/:id          | Editar dados do produto    |
-| delete | /api/v1/products/:id          | Deletar estoque de produto |
 | get    | /api/v1/products/favorites    | Lista de favoritos         |
 | post   | /api/v1/products/:id/favorite | Favoritar produto          |
 | delete | /api/v1/products/:id/favorite | Deletar produto favoritado |
+
+### Carrinho
+
+| Metodo | Endpoit                | Descrição                      |
+| ------ | ---------------------- | ------------------------------ |
+| get    | /api/v1/cart           | Carrinho de produtos           |
+| put    | /api/v1/cart/items/:id | Editar produtos do carrinho    |
+| post   | /api/v1/cart/items     | Adicionar produtos ao carrinho |
+| delete | /api/v1/cart/items/:id | Deletar produto do carrinho    |
+| delete | /api/v1/cart/items     | Deletar todos os produtos      |

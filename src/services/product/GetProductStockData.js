@@ -1,7 +1,5 @@
-//=== Configs
-import logger from "../../configs/logger.js";
 //=== Models
-import { UserModel, ProductModel, FavoriteModel } from "../../models/index.js";
+import { ProductModel, FavoriteModel } from "../../models/index.js";
 //=== Utils
 import AppError from "../../utils/AppError.js";
 
@@ -13,7 +11,9 @@ export default async function GetProductStockData(user, productId) {
     }
 
     // Validar se produto esta favoritado pelo usuário
-    const is_favorited = await FavoriteModel.findOne({ where: { userId: user.id, productId } });
+    const is_favorited = await FavoriteModel.findOne({
+        where: { userId: user.id, productId: productInstance.id },
+    });
 
     return {
         is_favorited: Boolean(is_favorited),

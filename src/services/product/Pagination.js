@@ -1,7 +1,7 @@
-import { Op } from "sequelize";
+import { Op, literal } from "sequelize";
 
 //=== Repositories
-import { ProductModel, UserModel } from "../../models/index.js";
+import { ProductModel } from "../../models/index.js";
 //=== Utils
 import AppError from "../../utils/AppError.js";
 
@@ -11,18 +11,12 @@ export default async function Pagination(user, page, filters, type) {
         throw new AppError("Paginação não disponivel", 400);
     }
 
-    // Valores de paginação
-    const limitItens = 1;
-    const offset = (page - 1) * limitItens; // Reduzir 1 da variavel page indicadora da pagina
-    const limit = offset + limitItens;
-
     // Campos para filtragem
     const { search, sort, order } = filters;
-
-    // Criando e definindo propriedades ao metodo de buscar where
+    // Criando e definindo propriedades ao metodo de buscar where.
     const where = {};
 
-    // Atibui a propriedade de busca
+    // Atribui a propriedade de busca
     if (search) {
         where.name = {
             [Op.like]: `%${search}%`,
@@ -36,32 +30,53 @@ export default async function Pagination(user, page, filters, type) {
 
     const allowedOrdes = ["DESC", "ASC"];
     const orderField = allowedOrdes.includes(order) ? order : "DESC";
+    // Define um EXITS para criar uma propriedade pra validar se
+    // produto esta favoritado.
+    const attributes = {
+        include: [
+            [
+                literal(`
+                    EXISTS (
+                        SELECT 1
+                        FROM favorites AS f
+                        WHERE f.productId = Products.id
+                        AND f.userId = "${user.id}"
+                    )
+                `),
+                "isFavorite",
+            ],
+        ],
+    };
 
-    // Adiciona aqui os includes em caso de busca de associações
-    const include = [];
-
-    // Caso liste os produtos favoritados do usuário, busca pelo id do usuário logado
-    if (type == "favorite") {
-        include.push({ model: UserModel, where: { id: user.id } });
-    }
+    // Valores de paginação
+    const limit = parseInt(filters.limit) || 12;
+    const offset = (page - 1) * limit; // Reduzir 1 da variavel page indicadora da pagina
 
     // Solicita os produtos
     const { count, rows } = await ProductModel.findAndCountAll({
         where,
-        include,
         order: [[sortField, orderField]],
+        attributes,
         limit,
         offset,
         distinct: true, // evitando duplicações na contagem de count
     });
 
+    // Ajusta valor de propriedade para true/false
+    const newRows = rows.map((product) => {
+        // Cria um json da instancia do produto
+        const data = product.toJSON();
+        // Converte valor em true/false
+        return { ...data, isFavorite: Boolean(data.isFavorite) };
+    });
+
     // Quantidade de paginas
-    const allPages = Math.ceil(count / limitItens);
+    const allPages = Math.ceil(count / limit);
 
     // Limites de paginação
     const previousPage = offset > 0 ? true : false;
     const nextPage = page < allPages ? true : false;
 
     // Definir propriedades
-    return { count, allPages, previousPage, nextPage, rows };
+    return { count, allPages, previousPage, nextPage, newRows };
 }
