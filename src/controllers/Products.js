@@ -1,6 +1,5 @@
 //=== Services
 import Pagination from "../services/product/Pagination.js";
-import PaginationFavorites from "../services/product/PaginationFavorites.js";
 import CreateProductInventory from "../services/product/CreateProductInventory.js";
 import EditProductStock from "../services/product/EditProductStock.js";
 import DeleteProductStock from "../services/product/DeleteProductStock.js";
@@ -44,7 +43,7 @@ export async function Delete(req, res) {
 
 export async function Favorites(req, res) {
     // Lista para paginação dos produtos favoritados
-    const favoriteList = await PaginationFavorites(req.user, req.query.page, req.query);
+    const favoriteList = await Pagination(req.user, req.query.page, req.query, "favorite");
 
     return res.status(200).json(favoriteList);
 }
