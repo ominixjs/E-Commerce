@@ -37,7 +37,7 @@ de produtos e clientes e o processamento de pedidos.
 - [x] Consultar produtos
 - [x] Pesquisar produtos
 - [x] Filtrar produtos
-- [] Gerenciamento de carrinho
+- [x] Gerenciamento de carrinho
 - [] Criação de pedido
 - [] Consulta de pedido
 

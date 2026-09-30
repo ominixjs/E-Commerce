@@ -28,9 +28,9 @@ export default async function AddProductCart(user, productId, quantity) {
 
     // Validar entrada de quantidade
     if (isNaN(quantity) || quantity < 0) {
-        throw new AppError("Quantidade inválida", 404);
+        throw new AppError("Quantidade inválida", 422);
     }
-    // Converte para numero
+    // Converte para o tipo numerico
     quantity = parseInt(quantity);
 
     // Caso o produto ja esteja no carrinho, apenas atualiza a quantidade.

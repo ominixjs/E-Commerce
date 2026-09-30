@@ -1,5 +1,8 @@
 import CartProductList from "../services/cart/CartProductList.js";
 import AddProductCart from "../services/cart/AddProductCart.js";
+import EditProductCart from "../services/cart/EditProductCart.js";
+import DeleteProductCart from "../services/cart/DeleteProductCart.js";
+import DeleteCart from "../services/cart/DeleteCart.js";
 
 export async function Cart(req, res) {
     // Valida e busca o carrinho do usuário
@@ -16,13 +19,22 @@ export async function Add(req, res) {
 }
 
 export async function Edit(req, res) {
-    return res.status(200).json({ message: "Carrinho Editar" });
+    // Editar produto do carrinho
+    await EditProductCart(req.user, req.params.id, req.body.action, req.body.quantity);
+
+    return res.status(200).json({ message: "Carrinho editado" });
 }
 
 export async function Remove(req, res) {
-    return res.status(200).json({ message: "Carrinho Remover" });
+    // Valida e deleta produto do carrinho
+    await DeleteProductCart(req.user, req.params.id);
+
+    return res.status(200).json({ message: "Você removeu o produto" });
 }
 
 export async function RemoveAll(req, res) {
-    return res.status(200).json({ message: "Carrinho Remover Tudo" });
+    // Deletar todo o carrinho
+    await DeleteCart(req.user);
+
+    return res.status(200).json({ message: "Você removeu tudo" });
 }
