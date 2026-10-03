@@ -37,8 +37,6 @@ export default async function Pagination(user, page, filters, type) {
         };
     }
 
-    console.log(listingMethod);
-
     // Valores de paginação
     const limit = parseInt(filters.limit) || 12;
     const offset = (page - 1) * limit; // Reduzir 1 da variavel page indicadora da pagina
@@ -55,7 +53,7 @@ export default async function Pagination(user, page, filters, type) {
     });
 
     // Valida formato da instancia para evitar erros de iterações.
-    const productList = Boolean(rows[0].Products) ? rows[0].Products : rows;
+    const productList = Boolean(rows[0]?.Products) ? rows[0].Products : rows;
     const products = productList.map((product) => {
         const data = product.toJSON();
         // Formata a instancia para o front end.

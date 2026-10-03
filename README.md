@@ -38,7 +38,8 @@ de produtos e clientes e o processamento de pedidos.
 - [x] Pesquisar produtos
 - [x] Filtrar produtos
 - [x] Gerenciamento de carrinho
-- [] Criação de pedido
+- [x] Criação de pedido
+- [] cotação de frete
 - [] Consulta de pedido
 
 ### Administrador

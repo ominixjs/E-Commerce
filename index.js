@@ -10,6 +10,7 @@ import AuthRouter from "./src/routers/AuthRouter.js";
 import UserRouter from "./src/routers/UserRouter.js";
 import ProductRouter from "./src/routers/ProductRouter.js";
 import CartRouter from "./src/routers/CartRouter.js";
+import OrderRouter from "./src/routers/OrderRouter.js";
 
 //===
 const app = express();
@@ -31,6 +32,7 @@ app.use(AuthRouter);
 app.use("/api/v1/", UserRouter);
 app.use("/api/v1/", ProductRouter);
 app.use("/api/v1/", CartRouter);
+app.use("/api/v1/", OrderRouter);
 
 //=== Middleware para tratar erros dos controllers
 app.use(ErrorHandler);

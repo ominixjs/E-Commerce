@@ -1,15 +1,15 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database.js";
 
-const Favorite = sequelize.define(
-    "Favorites",
+const OrderItem = sequelize.define(
+    "OrderItems",
     {
         id: {
             type: DataTypes.STRING,
             allowNull: false,
             primaryKey: true,
         },
-        userId: {
+        orderId: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -17,23 +17,23 @@ const Favorite = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        price: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+        },
+        subtotal: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+        },
     },
     {
         freezeTableName: true,
         timestamps: true,
-        indexes: [
-            {
-                unique: true,
-                fields: ["userId", "productId"],
-            },
-            {
-                fields: ["userId"],
-            },
-            {
-                fields: ["productId"],
-            },
-        ],
     },
 );
 
-export default Favorite;
+export default OrderItem;

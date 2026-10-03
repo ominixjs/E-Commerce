@@ -5,6 +5,7 @@ import ProductModel from "./Product.js";
 import FavoriteModel from "./Favorite.js";
 import CartModel from "./Cart.js";
 import CartItemModel from "./CartItem.js";
+import sequelize from "../configs/database.js";
 
 // Associações -->
 
