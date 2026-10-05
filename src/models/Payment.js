@@ -1,32 +1,32 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database.js";
 
-const OrderItem = sequelize.define(
-    "OrderItems",
+const Payment = sequelize.define(
+    "Payments",
     {
         id: {
             type: DataTypes.STRING,
-            allowNull: false,
             primaryKey: true,
+            allowNull: false,
         },
         orderId: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        productId: {
+        method: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        quantity: {
-            type: DataTypes.INTEGER,
+        status: {
+            type: DataTypes.ENUM("PENDING", "APPROVED", "DECLINED", "REFUNDED"),
             allowNull: false,
         },
-        price: {
-            type: DataTypes.INTEGER,
+        transactionId: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        subtotal: {
-            type: DataTypes.INTEGER,
+        amount: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },
@@ -36,4 +36,4 @@ const OrderItem = sequelize.define(
     },
 );
 
-export default OrderItem;
+export default Payment;

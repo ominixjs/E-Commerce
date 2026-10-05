@@ -26,7 +26,31 @@ const Order = sequelize.define(
             allowNull: false,
         },
         total: {
-            type: DataTypes.DECIMAL(10, 2),
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        shippingStreet: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        shippingNumber: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        shippingCity: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        shippingState: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        shippingComplement: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        shippingZipCode: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },

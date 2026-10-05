@@ -33,6 +33,16 @@ const Address = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        type: {
+            type: DataTypes.ENUM("casa", "trabalho"),
+            defaultValue: "casa",
+            allowNull: false,
+        },
+        isDefault: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false,
+        },
     },
     {
         freezeTableName: true,

@@ -3,7 +3,13 @@ import { nanoid } from "nanoid";
 //=== Configs
 import logger from "../../configs/logger.js";
 //=== Repositories
-import { ProductModel, CartModel, CartItemModel } from "../../models/index.js";
+import {
+    ProductModel,
+    CartModel,
+    CartItemModel,
+    OrderModel,
+    OrderItemModel,
+} from "../../models/index.js";
 //=== Utils
 import AppError from "../../utils/AppError.js";
 
@@ -35,28 +41,35 @@ export default async function CreateOrder(user, zip) {
         total += item.Product.price * item.quantity;
     }
     // Formata na moeda local
-    total = (total / 100).toLocaleString("pt-BR", {
-        
-        
+    total = FormatCurrencyValue(total, "pt-BR", "BRL");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+    // Cria pedido
+    await OrderModel.create({
+        id: nanoid(10),
+        userId: user.id,
+        status: "PENDING",
+        total,
     });
 
-    return {
-        total,
-    };
+    // Salva os pedidos
+    for (const item of cart.CartItems) {
+        const price = item.Product.price;
+        const calcPrice = price * item.quantity;
+        const subtotal = FormatCurrencyValue(calcPrice, "pt-BR", "BRL");
+
+        await OrderItemModel.create({
+            id: nanoid(10),
+            productId: item.Product.id,
+            quantity: item.quantity,
+            price: FormatCurrencyValue(price, "pt-BR", "BRL"),
+            subtotal,
+        });
+    }
+}
+
+function FormatCurrencyValue(value, language = "pt-BR", currency = "BRL") {
+    return (value / 100).toLocaleString(language, {
+        style: "currency",
+        currency,
+    });
 }
