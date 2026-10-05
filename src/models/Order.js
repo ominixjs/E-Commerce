@@ -26,7 +26,7 @@ const Order = sequelize.define(
             allowNull: false,
         },
         total: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         shippingStreet: {
@@ -51,6 +51,11 @@ const Order = sequelize.define(
         },
         shippingZipCode: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        shippingType: {
+            type: DataTypes.ENUM("casa", "trabalho", "outro"),
+            defaultValue: "casa",
             allowNull: false,
         },
     },

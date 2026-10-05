@@ -9,11 +9,12 @@ import {
     CartItemModel,
     OrderModel,
     OrderItemModel,
+    AddressModel,
 } from "../../models/index.js";
 //=== Utils
 import AppError from "../../utils/AppError.js";
 
-export default async function CreateOrder(user, zip) {
+export default async function CreateOrder(user, addressId) {
     // Valida e localiza carrinho com os produtos
     const cart = await CartModel.findOne({
         where: {
@@ -43,12 +44,42 @@ export default async function CreateOrder(user, zip) {
     // Formata na moeda local
     total = FormatCurrencyValue(total, "pt-BR", "BRL");
 
-    // Cria pedido
-    await OrderModel.create({
+    // Busca endereço no banco
+    const addressInstace = await AddressModel.findByPk(addressId);
+    if (!addressInstace) {
+        throw new AppError("Endereço inválido ou não foi localizado", 404);
+    }
+
+    console.log({
         id: nanoid(10),
         userId: user.id,
         status: "PENDING",
         total,
+
+        shippingStreet: addressInstace.street,
+        shippingNumber: addressInstace.number,
+        shippingCity: addressInstace.city,
+        shippingState: addressInstace.state,
+        shippingComplement: addressInstace.complement,
+        shippingZipCode: addressInstace.zip,
+        shippingType: addressInstace.type,
+    });
+
+    // Cria pedido
+    const orderId = nanoid(10);
+    await OrderModel.create({
+        id: orderId,
+        userId: user.id,
+        status: "PENDING",
+        total,
+
+        shippingStreet: addressInstace.street,
+        shippingNumber: addressInstace.number,
+        shippingCity: addressInstace.city,
+        shippingState: addressInstace.state,
+        shippingComplement: addressInstace.complement,
+        shippingZipCode: addressInstace.zip,
+        shippingType: addressInstace.type,
     });
 
     // Salva os pedidos
@@ -60,6 +91,7 @@ export default async function CreateOrder(user, zip) {
         await OrderItemModel.create({
             id: nanoid(10),
             productId: item.Product.id,
+            orderId: orderId,
             quantity: item.quantity,
             price: FormatCurrencyValue(price, "pt-BR", "BRL"),
             subtotal,

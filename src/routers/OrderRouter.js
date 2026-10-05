@@ -8,6 +8,6 @@ import * as orderController from "../controllers/Order.js";
 const router = express.Router();
 
 // Pedidos feitos
-router.get("/orders", RequireAuth, orderController.Orders);
+router.post("/orders", RequireAuth, orderController.Orders);
 
 export default router;

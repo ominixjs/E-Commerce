@@ -38,8 +38,10 @@ de produtos e clientes e o processamento de pedidos.
 - [x] Pesquisar produtos
 - [x] Filtrar produtos
 - [x] Gerenciamento de carrinho
+- [x] Adicionar endereço
 - [x] Criação de pedido
-- [] cotação de frete
+- [] Cotação de frete
+- [] Pagamento
 - [] Consulta de pedido
 
 ### Administrador
@@ -77,6 +79,7 @@ de produtos e clientes e o processamento de pedidos.
     - [x] Validar se produto existe para favoritar
     - [x] Validar se produto esta favoritado para remover status
     - [x] Definir lista individual de favoritos para cada usuário
+    - [x] Validar dados crucias e criar pedido
 
 ## 🔌 Endpoints
 
@@ -89,12 +92,14 @@ de produtos e clientes e o processamento de pedidos.
 
 ### Cliente
 
-| Metodo | Endpoit                  | Descrição                |
-| ------ | ------------------------ | ------------------------ |
-| get    | /api/v1/users/me         | Obter dados da conta     |
-| get    | /api/v1/users/me/history | Obter historico da conta |
-| put    | /api/v1/users/me         | Editar dados da conta    |
-| delete | /api/v1/users/me         | Deletar conta            |
+| Metodo | Endpoit                     | Descrição             |
+| ------ | --------------------------- | --------------------- |
+| get    | /api/v1/users/me            | Obter dados da conta  |
+| put    | /api/v1/users/me            | Editar dados da conta |
+| delete | /api/v1/users/me            | Deletar conta         |
+| get    | /api/v1/users/me/address    | Endereços             |
+| put    | /api/v1/users/me/adress/:id | Editar endereços      |
+| delete | /api/v1/users/me/adress/:id | Deletar endereços     |
 
 ### Produtos
 
@@ -123,3 +128,9 @@ de produtos e clientes e o processamento de pedidos.
 | post   | /api/v1/cart/items     | Adicionar produtos ao carrinho |
 | delete | /api/v1/cart/items/:id | Deletar produto do carrinho    |
 | delete | /api/v1/cart/items     | Deletar todos os produtos      |
+
+### Pedidos
+
+| Metodo | Endpoit        | Descrição    |
+| ------ | -------------- | ------------ |
+| post   | /api/v1/orders | Criar pedido |
