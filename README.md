@@ -131,6 +131,7 @@ de produtos e clientes e o processamento de pedidos.
 
 ### Pedidos
 
-| Metodo | Endpoit        | Descrição    |
-| ------ | -------------- | ------------ |
-| post   | /api/v1/orders | Criar pedido |
+| Metodo | Endpoit            | Descrição       |
+| ------ | ------------------ | --------------- |
+| post   | /api/v1/orders     | Criar pedido    |
+| delete | /api/v1/orders/:id | Cancelar pedido |

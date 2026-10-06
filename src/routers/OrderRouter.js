@@ -9,5 +9,7 @@ const router = express.Router();
 
 // Pedidos feitos
 router.post("/orders", RequireAuth, orderController.Orders);
+// Cancelar pedido
+router.delete("/orders/:id", RequireAuth, orderController.Cancel);
 
 export default router;
