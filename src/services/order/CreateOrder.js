@@ -11,8 +11,10 @@ import {
     OrderItemModel,
     AddressModel,
 } from "../../models/index.js";
+
 //=== Utils
 import AppError from "../../utils/AppError.js";
+import FormatCurrencyValue from "../../utils/FormatCurrencyValue.js";
 
 export default async function CreateOrder(user, addressId) {
     // Valida e localiza carrinho com os produtos
@@ -42,6 +44,7 @@ export default async function CreateOrder(user, addressId) {
         total += item.Product.price * item.quantity;
     }
     // Formata na moeda local
+    // Definir metodo para troca moeda se necessário
     total = FormatCurrencyValue(total, "pt-BR", "BRL");
 
     // Busca endereço no banco
@@ -67,7 +70,7 @@ export default async function CreateOrder(user, addressId) {
         shippingType: addressInstace.type,
     });
 
-    // Salva os pedidos
+    // Salva lista de produtos do pedido
     for (const item of cart.CartItems) {
         const price = item.Product.price;
         const calcPrice = price * item.quantity;
@@ -82,11 +85,14 @@ export default async function CreateOrder(user, addressId) {
             subtotal,
         });
     }
-}
 
-function FormatCurrencyValue(value, language = "pt-BR", currency = "BRL") {
-    return (value / 100).toLocaleString(language, {
-        style: "currency",
-        currency,
+    logger.info({
+        id: user.id,
+        name: user.name,
+        orderId,
+        message: "Usuário criou um pedido",
     });
+
+    // Identificação do pedido e continua para o pagamento
+    return { orderId };
 }
