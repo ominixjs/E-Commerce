@@ -1,10 +1,12 @@
 //=== Repositories
 import {
     UserModel,
-    CartModel,
     AddressModel,
+    CartModel,
+    CartItemModel,
     OrderModel,
     OrderItemModel,
+    PaymentModel,
 } from "../../models/index.js";
 //=== Utils
 import AppError from "../../utils/AppError.js";
@@ -26,8 +28,9 @@ export default async function FindDBUser(id) {
     }
 
     // Define associações
-    include.push({ model: CartModel });
+    include.push({ model: CartModel, include: CartItemModel });
     include.push({ model: OrderModel, include: OrderItemModel });
+    include.push({ model: PaymentModel });
 
     // Cria uma instancia do usuário
     const user = await UserModel.findByPk(id, {

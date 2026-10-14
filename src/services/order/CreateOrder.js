@@ -14,9 +14,11 @@ import {
 
 //=== Utils
 import AppError from "../../utils/AppError.js";
-import FormatCurrencyValue from "../../utils/FormatCurrencyValue.js";
 
 export default async function CreateOrder(user, addressId) {
+    // Pedido recebe o Carinho, Endereço e Frete
+    // ...
+
     // Valida e localiza carrinho com os produtos
     const cart = await CartModel.findOne({
         where: {
@@ -27,9 +29,8 @@ export default async function CreateOrder(user, addressId) {
             include: ProductModel,
         },
     });
-
-    if (!cart || cart.CartItems.length <= 0) {
-        throw new AppError("Carinho não localizado, atualize sua lista", 404);
+    if (!Boolean(cart) || cart.CartItems.length <= 0) {
+        throw new AppError("O carrinho esta vazio", 404);
     }
 
     // Valida quantidade e estoque dos produtos
@@ -43,13 +44,10 @@ export default async function CreateOrder(user, addressId) {
     for (const item of cart.CartItems) {
         total += item.Product.price * item.quantity;
     }
-    // Formata na moeda local
-    // Definir metodo para troca moeda se necessário
-    total = FormatCurrencyValue(total, "pt-BR", "BRL");
 
     // Busca endereço no banco
     const addressInstace = await AddressModel.findByPk(addressId);
-    if (!addressInstace) {
+    if (!Boolean(addressInstace)) {
         throw new AppError("Endereço inválido ou não foi localizado", 404);
     }
 
@@ -72,19 +70,18 @@ export default async function CreateOrder(user, addressId) {
 
     // Salva lista de produtos do pedido
     for (const item of cart.CartItems) {
-        const price = item.Product.price;
-        const calcPrice = price * item.quantity;
-        const subtotal = FormatCurrencyValue(calcPrice, "pt-BR", "BRL");
-
         await OrderItemModel.create({
             id: nanoid(10),
             productId: item.Product.id,
             orderId: orderId,
             quantity: item.quantity,
-            price: FormatCurrencyValue(price, "pt-BR", "BRL"),
-            subtotal,
+            price: item.Product.price,
+            subtotal: item.Product.price * item.quantity,
         });
     }
+
+    // Limpa todo o carrinho
+    await CartItemModel.destroy({ where: { cartId: cart.id } });
 
     logger.info({
         id: user.id,

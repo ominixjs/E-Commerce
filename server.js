@@ -1,3 +1,4 @@
+import ngrok from "@ngrok/ngrok";
 import "dotenv/config";
 
 import logger from "./src/configs/logger.js";

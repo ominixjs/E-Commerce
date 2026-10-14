@@ -22,11 +22,11 @@ const OrderItem = sequelize.define(
             allowNull: false,
         },
         price: {
-            type: DataTypes.STRING,
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
         subtotal: {
-            type: DataTypes.STRING,
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
     },

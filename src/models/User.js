@@ -18,6 +18,11 @@ const User = sequelize.define(
             allowNull: false,
             unique: true,
         },
+        cpf: {
+            type: DataTypes.STRING(11),
+            unique: true,
+            allowNull: false,
+        },
         birthday: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -29,6 +34,11 @@ const User = sequelize.define(
         termsAccepted: {
             type: DataTypes.JSON,
             defaultValue: [],
+        },
+        asaasCustomerId: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
         },
     },
     {

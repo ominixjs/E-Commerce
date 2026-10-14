@@ -57,7 +57,7 @@ UserModel.hasOne(CartModel, {
     onDelete: "CASCADE",
 });
 CartModel.belongsTo(UserModel, {
-    foreignKey: "cartId",
+    foreignKey: "userId",
     onDelete: "CASCADE",
 });
 
@@ -74,11 +74,9 @@ CartItemModel.belongsTo(CartModel, {
 // Associação de produtos e carinho de produtos
 ProductModel.hasMany(CartItemModel, {
     foreignKey: "productId",
-    onDelete: "CASCADE",
 });
 CartItemModel.belongsTo(ProductModel, {
     foreignKey: "productId",
-    onDelete: "CASCADE",
 });
 
 // Associação entre Order e Usuário
@@ -86,13 +84,12 @@ UserModel.hasMany(OrderModel, {
     foreignKey: "userId",
 });
 OrderModel.belongsTo(UserModel, {
-    foreignKey: "orderId",
+    foreignKey: "userId",
 });
 
 // Associação entre Order e OrderItem
 OrderModel.hasMany(OrderItemModel, {
     foreignKey: "orderId",
-    onDelete: "CASCADE",
 });
 OrderItemModel.belongsTo(OrderModel, {
     foreignKey: "orderId",
@@ -111,14 +108,14 @@ UserModel.hasMany(PaymentModel, {
     foreignKey: "userId",
 });
 PaymentModel.belongsTo(UserModel, {
-    foreignKey: "paymentId",
+    foreignKey: "userId",
 });
 
 // Associação entre Pedido e Pagamentos
-PaymentModel.hasMany(OrderModel, {
-    foreignKey: "paymentId",
+OrderModel.hasMany(PaymentModel, {
+    foreignKey: "orderId",
 });
-OrderModel.belongsTo(PaymentModel, {
+PaymentModel.belongsTo(OrderModel, {
     foreignKey: "orderId",
 });
 
@@ -134,4 +131,5 @@ export {
     CartItemModel,
     OrderModel,
     OrderItemModel,
+    PaymentModel,
 };

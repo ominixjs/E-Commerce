@@ -7,8 +7,6 @@ export default function RequestGuest(req, res, next) {
     const authHeader = req.headers.authorization;
 
     // Se não houver autenticação, segue com a requisição
-    console.log(authHeader);
-    
     if (!authHeader) {
         return next();
     }

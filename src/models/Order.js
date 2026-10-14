@@ -26,7 +26,7 @@ const Order = sequelize.define(
             allowNull: false,
         },
         total: {
-            type: DataTypes.STRING,
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
         shippingStreet: {
