@@ -33,7 +33,7 @@ export default async function CancelCustomerOrder(user, orderId) {
             userId: user.id,
             status: "PENDING",
         },
-    });
+    });     
     if (blockStatus.includes(paymentInstance.status)) {
         await paymentInstance.update({ status: "CANCELLED" });
     }

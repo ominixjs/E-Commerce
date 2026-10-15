@@ -24,6 +24,7 @@ export default async function ValidareAndPayForOrder(user, orderId, method) {
         },
         include: {
             model: OrderItemModel,
+            include: PaymentModel,
         },
     });
     if (!Boolean(order)) {
@@ -34,56 +35,35 @@ export default async function ValidareAndPayForOrder(user, orderId, method) {
     const blockOrderStatus = ["PAID", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"];
     if (blockOrderStatus.includes(order.status)) {
         throw new AppError(
-            "Houve uma mudança no status do pedido. Atualize a pagina 'Minhas Compras' ou entre em contato.",
+            "Pedido não esta mais disponivel. Atualize a pagina 'Minhas Compras' ou entre em contato.",
             422,
         );
     }
 
-    // Em caso de troca da forma de pagamento, valida o status atual do pagamento.
-    const payments = await PaymentModel.findAll({
-        where: {
-            orderId,
-            userId: user.id,
-        },
-    });
-
     // Valida cada status dos pagamentos para evitar ações duplicadas.
-    const blockPaymentStatus = ["PENDING", "APPROVED"];
-    if (Boolean(payments)) {
-        for (const payment of payments) {
-            if (blockPaymentStatus.includes(payment.status)) {
-                throw new AppError(
-                    "Verifique o status do pagamento ou cancele o pedido e tente novamente. Atualize a pagina 'Minhas Compras' ou entre em contato.",
-                    422,
-                );
-            }
-        }
-    }
+    const is_validStatus = order?.some((o) => ["PENDING", "APPROVED"].includes(o.Payments.status));
+    if (is_validStatus) throw new AppError("Pedido já possui status de pagamento", 422);
 
-    // Realizar pagamento.
+    // Reduz estoque e garante os produtos
+    await ReduceProductInventory(user.id, order);
+
     // Pix redireciona usuário e aguarda validação
     // Cartão finaliza pagamento e aguarda validação
-    let paymentMade = null;
-    if (method === "PIX") {
-        // Função faz todo processo de solicitação e retorna dados
-        // para redirecionar usuário para pagamento PIX.
-        paymentMade = await PixPaymentMethod(user.id, order, method);
-    }
+    const PAYMENT_METHOD = {
+        PIX: PixPaymentMethod,
+    };
+    const paymentMade = await PAYMENT_METHOD(method);
 
-    // Dados do pedido e status de todo o processo.
-    // Aqui o cliente só aguardará a resposta do sistema ao validar a transação.
-    // Após isso o ADM cuidará do restante.
-    const paymentId = nanoid(10);
-    const transactionId = nanoid(10);
+    // Cria registro do pagamento
     await PaymentModel.create({
-        id: paymentId,
+        id: nanoid(10),
         orderId,
         userId: user.id,
         status: "PENDING",
         amount: order.total,
         method,
         currency: "BRL",
-        transactionId,
+        transactionId: nanoid(10),
         provider: "ASAAS",
         providerPaymentId: paymentMade.id,
         paidAt: new Date().toISOString(),
@@ -92,20 +72,32 @@ export default async function ValidareAndPayForOrder(user, orderId, method) {
     logger.info({
         userId: user.id,
         orderId,
-        paymentId,
-        transactionId,
-        paymentMade,
-        message: "Transação concluida, aguardando validação de pagamento.",
+        message: "Operação concluida, aguardando validação de pagamento.",
     });
 
-    if (method === "PIX") {
-        return paymentMade.invoiceUrl;
-    }
-
-    return true;
+    return paymentMade;
 }
 
-async function PixPaymentMethod(userId, order, method) {
+async function PixPaymentMethod(order, method) {
+    // Formato dos dados para API de pagamento
+    const data = {
+        customer: user.asaasCustomerId,
+        // cpfCnpj: user.cpf,
+        billingType: method,
+        value: order.total,
+        dueDate: new Date().toISOString().split("T")[0],
+        description: `Pedido #${order.id}`,
+    };
+
+    // Solicita dados da API
+    const { id, invoiceUrl } = await CreateAsaasPayment(data);
+
+    // Pix deve ser tratado diferente das outras formas de pagemnto.
+    // Após enviar os dados, deve redirecionar cliente para outra rota de pagamento do Asaas.
+    return { id, invoiceUrl };
+}
+
+async function ReduceProductInventory(userId, order) {
     // localizar usuário e usar suas identificações no banco e no sistema de pagamento
     const user = await UserModel.findByPk(userId, {
         attributes: ["id", "cpf", "asaasCustomerId"],
@@ -138,21 +130,4 @@ async function PixPaymentMethod(userId, order, method) {
         // Reduz o estoque após gerar status de pagamento.
         await product.save();
     }
-
-    // Formato dos dados para API de pagamento
-    const data = {
-        customer: user.asaasCustomerId,
-        // cpfCnpj: user.cpf,
-        billingType: method,
-        value: order.total,
-        dueDate: new Date().toISOString().split("T")[0],
-        description: `Pedido #${order.id}`,
-    };
-
-    // Solicita dados da API
-    const { id, invoiceUrl } = await CreateAsaasPayment(data);
-
-    // Pix deve ser tratado diferente das outras formas de pagemnto.
-    // Após enviar os dados, deve redirecionar cliente para outra rota de pagamento do Asaas.
-    return { id, invoiceUrl };
 }
